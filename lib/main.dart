@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:test_sib/routes/app_router.gr.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(MyApp());
 }
 
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       routerDelegate: _router.delegate(),
       routeInformationParser: _router.defaultRouteParser(),
@@ -59,30 +62,61 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.only(
+                  left: 16.0,
+                  right: 16.0,
+                  bottom: 16.0,
+                ),
                 child: Row(
                   children: [
                     if (tabsRouter.activeIndex != 0)
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(110, 36)),
                         onPressed: () {
                           tabsRouter.setActiveIndex(tabsRouter.activeIndex - 1);
                         },
-                        child: const Text("Prev"),
+                        child: const Text("Назад"),
                       ),
-                    Expanded(child: Container(),),
+                    Expanded(
+                      child: Container(),
+                    ),
                     if (tabsRouter.activeIndex != tabsRouter.pageCount - 1)
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(110, 36)),
                         onPressed: () {
                           tabsRouter.setActiveIndex(tabsRouter.activeIndex + 1);
                         },
-                        child: const Text("Next"),
+                        child: const Text("Пропустить"),
                       ),
-
                   ],
                 ),
               )
             ],
           ),
+          drawer: Drawer(
+              child: ListView(
+            padding: EdgeInsets.zero,
+            children: const [
+              ListTile(
+                  leading: Icon(Icons.image), title: Text('Показать отчёт')),
+              ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Выйти без сохранения')),
+              Divider(
+                height: 15.0,
+                color: Colors.grey,
+              ),
+              ListTile(
+                  leading: Icon(Icons.touch_app),
+                  title: Text('Сенсорный экран')),
+              ListTile(leading: Icon(Icons.usb), title: Text('USB')),
+              ListTile(
+                  leading: Icon(Icons.bug_report),
+                  title: Text('Результаты текущего тестирования')),
+            ],
+          )),
         );
       },
     );
