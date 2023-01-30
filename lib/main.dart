@@ -5,7 +5,7 @@ import 'package:test_sib/routes/app_router.gr.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   runApp(MyApp());
 }
 
